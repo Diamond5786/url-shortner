@@ -1,77 +1,149 @@
-"use client"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Display</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-import { useEffect } from "react"
-import { useParams } from "next/navigation"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { ExternalLink, Home } from "lucide-react"
-import Link from "next/link"
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
 
-interface ShortenedUrl {
-  id: string
-  originalUrl: string
-  shortCode: string
-  shortUrl: string
-  createdAt: string
-}
+        .container {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
 
-export default function RedirectPage() {
-  const params = useParams()
-  const shortCode = params.shortCode as string
+        .image-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
 
-  useEffect(() => {
-    const saved = localStorage.getItem("shortenedUrls")
-    if (saved) {
-      const urls: ShortenedUrl[] = JSON.parse(saved)
-      const foundUrl = urls.find((url) => url.shortCode === shortCode)
+        .image-card:hover {
+            transform: translateY(-5px);
+        }
 
-      if (foundUrl) {
-        // Redirect after a short delay
-        setTimeout(() => {
-          window.location.href = foundUrl.originalUrl
-        }, 2000)
-      }
-    }
-  }, [shortCode])
+        .main-image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
 
-  const handleManualRedirect = () => {
-    const saved = localStorage.getItem("shortenedUrls")
-    if (saved) {
-      const urls: ShortenedUrl[] = JSON.parse(saved)
-      const foundUrl = urls.find((url) => url.shortCode === shortCode)
+        .main-image:hover {
+            transform: scale(1.02);
+        }
 
-      if (foundUrl) {
-        window.location.href = foundUrl.originalUrl
-      }
-    }
-  }
+        .title {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <CardTitle>Redirecting...</CardTitle>
-          <CardDescription>You will be redirected to your destination in a moment</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex justify-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          </div>
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
 
-          <div className="flex gap-2">
-            <Button onClick={handleManualRedirect} className="flex-1">
-              <ExternalLink className="h-4 w-4 mr-2" />
-              Go Now
-            </Button>
-            <Button variant="outline" asChild>
-              <Link href="/">
-                <Home className="h-4 w-4 mr-2" />
-                Home
-              </Link>
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+        .footer {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+
+        .see-more {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .see-more:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .image-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Beautiful Image</h1>
+        <p class="subtitle">Stunning visual content</p>
+        
+        <div class="image-card">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/aifaceswap-a5e2fe7dfddd20fc5a4700c681d25bd8.jpg-0KVujAleenRwyzhbbemO3sCAlHH9Wq.jpeg" alt="Beautiful Image" class="main-image" id="mainImage">
+        </div>
+        
+        <a href="#" class="see-more" onclick="handleSeeMore()">See More</a>
+        
+        <div class="footer">
+            <p>See More</p>
+        </div>
     </div>
-  )
-}
+
+    <script>
+        function handleSeeMore() {
+            // Add your custom functionality here
+            alert('See More clicked!');
+            // You can redirect to any URL or perform any action
+            // window.open('https://your-link-here.com', '_blank');
+        }
+
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const image = document.getElementById('mainImage');
+            
+            image.addEventListener('click', function() {
+                this.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>
